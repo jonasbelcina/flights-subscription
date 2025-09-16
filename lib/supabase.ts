@@ -22,4 +22,10 @@ export type Deal = {
   link: string;
 };
 
+// Server-side admin client for inserts/updates via API routes
+export function getSupabaseAdmin() {
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY as string;
+  return createClient(supabaseUrl || "", serviceRoleKey || "");
+}
+
 
