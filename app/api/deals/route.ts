@@ -21,40 +21,42 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const {
-    destination,
-    price,
-    departure_date,
-    return_date,
-    airline = null,
-    link,
-  } = payload ?? {};
-
-  if (
-    !destination ||
-    typeof destination !== "string" ||
-    typeof price !== "number" ||
-    !link ||
-    typeof link !== "string" ||
-    !departure_date ||
-    !return_date
-  ) {
-    return NextResponse.json({
-      error:
-        "Missing or invalid fields. Required: destination (string), price (number), departure_date (YYYY-MM-DD), return_date (YYYY-MM-DD), link (string)",
-    }, { status: 422 });
+  const { subject, flights } = payload ?? {};
+  if (!subject || typeof subject !== "string") {
+    return NextResponse.json({ error: "Missing/invalid field: subject (string)" }, { status: 422 });
   }
 
   const admin = getSupabaseAdmin();
 
   const { data, error } = await admin
     .from("deals")
-    .insert([{ destination, price, departure_date, return_date, airline, link }])
+    .insert([{ subject }])
     .select()
     .single();
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  // Optionally insert nested flights
+  if (Array.isArray(flights) && flights.length && data?.id) {
+    const rows = flights
+      .filter(Boolean)
+      .map((f: any) => ({
+        deal_id: data.id,
+        dateRange: String(f.dateRange || ""),
+        airline: String((Array.isArray(f.airlines) ? f.airlines[0] : f.airline) || ""),
+        stops: String(f.stops || ""),
+        duration: String(f.duration || ""),
+        price: Number(f.price || 0),
+        link: String(f.link || ""),
+      }));
+    if (rows.length) {
+      const { error: childErr } = await admin.from("deal_flights").insert(rows);
+      if (childErr) {
+        return NextResponse.json({ ok: true, deal: data, warning: `Inserted deal but failed to add flights: ${childErr.message}` }, { status: 201 });
+      }
+    }
   }
 
   return NextResponse.json({ ok: true, deal: data }, { status: 201 });

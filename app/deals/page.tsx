@@ -8,8 +8,8 @@ export const dynamic = "force-dynamic";
 async function getDeals(): Promise<Deal[]> {
   const { data, error } = await supabase
     .from("deals")
-    .select("id, destination, price, departure_date, return_date, airline, link")
-    .order("price", { ascending: true });
+    .select("id, subject")
+    .order("id", { ascending: false });
 
   if (error) {
     console.error(error);
@@ -18,17 +18,7 @@ async function getDeals(): Promise<Deal[]> {
   return (data as Deal[]) || [];
 }
 
-function formatDate(dateStr: string) {
-  try {
-    return new Date(dateStr).toLocaleDateString(undefined, {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  } catch {
-    return dateStr;
-  }
-}
+// no date formatting needed; dateRange is preformatted
 
 export default async function DealsPage() {
   const deals = await getDeals();
@@ -55,24 +45,17 @@ export default async function DealsPage() {
             {deals.map((deal) => (
               <Card key={deal.id} className="flex flex-col">
                 <CardHeader>
-                  <CardTitle className="text-xl">{deal.destination}</CardTitle>
-                  <CardDescription>
-                    {deal.airline ? `${deal.airline} • ` : ""}
-                    {formatDate(deal.departure_date)} – {formatDate(deal.return_date)}
-                  </CardDescription>
+                  <CardTitle className="text-xl">
+                    <Link href={`/deals/${deal.id}`} className="hover:underline">
+                      {deal.subject}
+                    </Link>
+                  </CardTitle>
+                  <CardDescription>Open to view available flights</CardDescription>
                 </CardHeader>
                 <CardContent className="mt-auto">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-3xl font-bold">${""}{deal.price.toFixed(0)}</p>
-                      <p className="text-xs text-muted-foreground">CAD roundtrip</p>
-                    </div>
-                    <Button asChild>
-                      <Link href={deal.link} target="_blank" rel="noopener noreferrer">
-                        Book now
-                      </Link>
-                    </Button>
-                  </div>
+                  <Button asChild>
+                    <Link href={`/deals/${deal.id}`}>View details</Link>
+                  </Button>
                 </CardContent>
               </Card>
             ))}

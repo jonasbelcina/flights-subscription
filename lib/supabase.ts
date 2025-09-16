@@ -14,12 +14,18 @@ export const supabase = createClient(supabaseUrl || "", supabaseAnonKey || "");
 
 export type Deal = {
   id: string;
-  destination: string;
-  price: number;
-  departure_date: string; // ISO date string
-  return_date: string; // ISO date string
-  airline: string | null;
-  link: string;
+  subject: string;
+};
+
+export type DealFlight = {
+  id: string;
+  deal_id: string;
+  dateRange: string; // e.g. "Sun 23 Nov – Mon 1 Dec"
+  airline: string;
+  stops: string;
+  duration: string; // "YWG–PUJ · 9 hrs"
+  price: number; // CAD
+  link: string; // booking URL
 };
 
 // Server-side admin client for inserts/updates via API routes
