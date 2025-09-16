@@ -4,15 +4,24 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Plane, Zap, Clock, CheckCircle2 } from "lucide-react";
+import { Plane, Zap, Clock, CheckCircle2, Flame } from "lucide-react";
 
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-600/15 via-primary/10 to-transparent pointer-events-none" />
-        <div className="container relative py-24 md:py-32 text-center">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/hero.jpg"
+            alt="Airplane flying over Winnipeg skyline at sunset"
+            fill
+            priority
+            className="object-cover opacity-10"
+          />
+        </div>
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-primary/15 via-primary/10 to-transparent pointer-events-none" />
+        <div className="container relative z-20 py-24 md:py-32 text-center">
           <div className="mx-auto max-w-3xl">
 						<div className="mx-auto mb-6 w-64">
               <Image
@@ -24,8 +33,18 @@ export default function Page() {
                 className="h-auto w-full"
               />
             </div>
+            {/* Urgency banner */}
+            <Link
+              href="#pricing"
+              className="group mx-auto mb-5 inline-flex max-w-full items-center gap-3 rounded-full border border-yellow-500/40 bg-yellow-400/20 px-4 py-2 text-sm text-foreground shadow-sm backdrop-blur transition-colors hover:bg-yellow-400/25 hover:border-yellow-500/60"
+            >
+              <Flame className="h-4 w-4 text-yellow-500" />
+              <span className="font-semibold">Limited-time:</span>
+              <span className="font-bold text-primary">$40/year</span>
+              <span className="text-muted-foreground">for the first 100 subscribers</span>
+            </Link>
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-              Cheap Flights Winnipeg
+							Fly More, Spend Less
             </h1>
             <p className="mt-4 text-lg text-muted-foreground">
               Hand-picked flight deals from Winnipeg. Get instant alerts and save hours hunting.
@@ -63,21 +82,21 @@ export default function Page() {
       <section className="container py-12">
         <div className="grid gap-6 sm:grid-cols-3">
           <div className="flex items-start gap-3">
-            <Zap className="mt-1 h-5 w-5 text-blue-600" />
+            <Zap className="mt-1 h-5 w-5 text-secondary" />
             <div>
               <p className="font-medium">Hand-picked deals</p>
               <p className="text-sm text-muted-foreground">Only the best value routes make the cut.</p>
             </div>
           </div>
           <div className="flex items-start gap-3">
-            <Clock className="mt-1 h-5 w-5 text-blue-600" />
+            <Clock className="mt-1 h-5 w-5 text-secondary" />
             <div>
               <p className="font-medium">Instant alerts</p>
               <p className="text-sm text-muted-foreground">Deals move fast — we notify you right away.</p>
             </div>
           </div>
           <div className="flex items-start gap-3">
-            <CheckCircle2 className="mt-1 h-5 w-5 text-blue-600" />
+            <CheckCircle2 className="mt-1 h-5 w-5 text-secondary" />
             <div>
               <p className="font-medium">Save time</p>
               <p className="text-sm text-muted-foreground">Skip searching — we do the work for you.</p>
@@ -87,7 +106,8 @@ export default function Page() {
       </section>
 
       {/* Pricing */}
-      <section className="container py-12">
+      <section id="pricing" className="py-12 bg-gray-50">
+        <div className="container">
         <div className="mx-auto max-w-5xl text-center">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Simple pricing</h2>
           <p className="mt-2 text-muted-foreground">Cancel anytime. No hidden fees.</p>
@@ -132,9 +152,9 @@ export default function Page() {
               </TooltipProvider>
             </CardContent>
           </Card>
-          <Card className="relative border-emerald-200">
+          <Card className="relative border-yellow-500/40 bg-yellow-400/10">
             <div className="absolute right-4 top-4">
-              <Badge variant="success">First 100 only</Badge>
+              <Badge className="bg-yellow-400 text-yellow-900">First 100 only</Badge>
             </div>
             <CardHeader>
               <CardTitle>Yearly — Limited</CardTitle>
@@ -153,6 +173,7 @@ export default function Page() {
               </TooltipProvider>
             </CardContent>
           </Card>
+        </div>
         </div>
       </section>
 
