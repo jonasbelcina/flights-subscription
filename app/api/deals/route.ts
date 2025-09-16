@@ -60,4 +60,14 @@ export async function POST(request: Request) {
   return NextResponse.json({ ok: true, deal: data }, { status: 201 });
 }
 
+export async function GET() {
+  return NextResponse.json({ ok: true, message: "Use POST to create a deal." });
+}
 
+export async function OPTIONS() {
+  const res = new NextResponse(null, { status: 204 });
+  res.headers.set("Access-Control-Allow-Origin", "*");
+  res.headers.set("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  return res;
+}
