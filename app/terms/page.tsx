@@ -129,7 +129,7 @@ export default function TermsPage() {
             <h2 className="text-xl font-semibold">11. Contact Us</h2>
             <p className="mt-2 text-muted-foreground">
               For questions, support, or data requests, please contact us:<br />
-              <span role="img" aria-label="email">📧</span> <span className="whitespace-nowrap">support@[yourdomain].com</span>
+              <span role="img" aria-label="email">📧</span> <span className="whitespace-nowrap">info@cheapflightswinnipeg.com</span>
             </p>
           </section>
         </div>
