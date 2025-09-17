@@ -50,29 +50,19 @@ export default function Page() {
               Hand-picked flight deals from Winnipeg. Get instant alerts and save hours hunting.
             </p>
             <div className="mt-8 flex items-center justify-center gap-3">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button className="px-6" disabled>
-                      Subscribe Monthly — $5
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Coming soon</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="secondary" className="px-6" disabled>
-                      Subscribe Yearly — $50
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Coming soon</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-              <Button variant="link" asChild>
-                <Link href="/deals">See live deals</Link>
+              <Button className="px-6" asChild>
+                <Link href="https://cheapflights.lemonsqueezy.com/buy/0123b381-a10e-4ded-8db6-aa8e63bdd409" target="_blank" rel="noopener noreferrer">
+                  Subscribe Monthly — $5
+                </Link>
               </Button>
+							<Button variant="secondary" className="px-6" asChild>
+								<Link href="https://cheapflights.lemonsqueezy.com/buy/5eeba522-441d-43b5-b6aa-53d00217be48" target="_blank" rel="noopener noreferrer">
+									Subscribe Yearly — $50
+								</Link>
+							</Button>
+              {/* <Button variant="link" asChild>
+                <Link href="/deals">See live deals</Link>
+              </Button> */}
             </div>
           </div>
         </div>
@@ -121,14 +111,11 @@ export default function Page() {
             <CardContent>
               <p className="text-4xl font-bold">$5</p>
               <p className="text-sm text-muted-foreground">per month</p>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button className="mt-6 w-full" disabled>Subscribe</Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Coming soon</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+								<Button className="mt-6 w-full justify-stretch">
+									<Link href="https://cheapflights.lemonsqueezy.com/buy/5eeba522-441d-43b5-b6aa-53d00217be48" target="_blank" rel="noopener noreferrer" className="w-full">
+										Subscribe
+									</Link>
+								</Button>
             </CardContent>
           </Card>
           <Card className="relative border-blue-200">
@@ -142,14 +129,11 @@ export default function Page() {
             <CardContent>
               <p className="text-4xl font-bold">$50</p>
               <p className="text-sm text-muted-foreground">per year</p>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button className="mt-6 w-full" disabled>Subscribe</Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Coming soon</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+							<Button className="mt-6 w-full justify-stretch">
+								<Link href="https://cheapflights.lemonsqueezy.com/buy/5eeba522-441d-43b5-b6aa-53d00217be48" target="_blank" rel="noopener noreferrer" className="w-full">
+									Subscribe
+								</Link>
+							</Button>
             </CardContent>
           </Card>
           <Card className="relative border-yellow-500/40 bg-yellow-400/10">
@@ -163,14 +147,11 @@ export default function Page() {
             <CardContent>
               <p className="text-4xl font-bold">$40</p>
               <p className="text-sm text-muted-foreground">per year</p>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button className="mt-6 w-full" disabled>Subscribe</Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Coming soon</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+								<Button className="mt-6 w-full justify-stretch">
+									<Link href="https://cheapflights.lemonsqueezy.com/buy/3d4c4473-17f1-47e2-a9e0-c45b275f5803" target="_blank" rel="noopener noreferrer" className="w-full">
+										Subscribe
+									</Link>
+								</Button>
             </CardContent>
           </Card>
         </div>
