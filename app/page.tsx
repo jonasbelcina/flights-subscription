@@ -164,7 +164,7 @@ export default function Page() {
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-center">FAQ</h2>
           <div className="mt-6 space-y-6">
             <div>
-              <p className="font-medium">Why not just use Google Flights?</p>
+              <p className="font-medium">Why should I subscribe?</p>
               <p className="text-sm text-muted-foreground mt-1">
                 We monitor and curate only exceptional value deals from Winnipeg so you don’t have to search for hours. We’ll point you straight to book.
               </p>
@@ -188,7 +188,12 @@ export default function Page() {
       {/* Footer */}
       <footer className="mt-auto border-t">
         <div className="container py-6 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Cheap Flights Winnipeg
+          <div className="mx-auto mb-3 w-10 h-10">
+            <Image src="/footer-logo.png" alt="Cheap Flights Winnipeg logo" width={40} height={40} className="h-10 w-10 mx-auto" />
+          </div>
+          <div>
+            © {new Date().getFullYear()} Cheap Flights Winnipeg · <Link href="/terms" className="underline underline-offset-4 text-primary">Terms &amp; Conditions</Link>
+          </div>
         </div>
       </footer>
     </div>
