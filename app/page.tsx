@@ -167,14 +167,14 @@ export default function Page() {
 							</Link>
 						</Button>
 						<p className="text-xs text-muted-foreground mt-3">
-							<i>Payments are powered by <b>Buy Me a Coffee</b>, a safe and reliable platform used by thousands of creators globally. <br/>We’re in the process of expanding our payment methods to include PayPal, credit cards, and local options to better serve our subscribers.</i>
+							<i>Payments are powered by <b>Buy Me a Coffee</b>, a safe and reliable platform used by thousands of creators globally. <br/>We’re also exploring PayPal and card-based options soon. <Link href="#faq">Learn more in our FAQ.</Link></i>
 						</p>
 					</div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="container py-12">
+      <section id="faq" className="container py-12">
         <div className="mx-auto max-w-3xl">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-center">FAQ</h2>
           <div className="mt-6 space-y-6">
@@ -201,7 +201,7 @@ export default function Page() {
               <p className="text-sm text-muted-foreground mt-1">
 								At the moment, we use Buy Me a Coffee as our secure payment processor. It’s a trusted platform used by thousands of creators and startups around the world.
               </p>
-							<ul className="mb-3 mt-3 px-2.5 px-4 text-muted-foreground text-sm">
+							<ul className="list-disc mb-3 mt-3 px-4 text-muted-foreground text-sm">
 								<li>Secure & reliable — all transactions are handled safely by Buy Me a Coffee.</li>
 								<li>Global support — lets us accept payments from Canada and other countries quickly.</li>
 								<li>Helps us move fast — using BMC allows us to focus on delivering flight deals to you without delays.</li>
