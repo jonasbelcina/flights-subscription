@@ -50,16 +50,21 @@ export default function Page() {
               Hand-picked flight deals from Winnipeg. Get instant alerts and save hours hunting.
             </p>
             <div className="mt-8 flex items-center justify-center gap-3">
-              <Button className="px-6" asChild>
-                <Link href="https://cheapflights.lemonsqueezy.com/buy/0123b381-a10e-4ded-8db6-aa8e63bdd409" target="_blank" rel="noopener noreferrer">
+							<Button className="px-6" asChild>
+                <Link href="#pricing">
+                  See Pricing
+                </Link>
+              </Button>
+              {/* <Button className="px-6" asChild>
+                <Link href="https://buymeacoffee.com/cheapflights/membership" target="_blank" rel="noopener noreferrer">
                   Subscribe Monthly — $5
                 </Link>
               </Button>
 							<Button variant="secondary" className="px-6" asChild>
-								<Link href="https://cheapflights.lemonsqueezy.com/buy/5eeba522-441d-43b5-b6aa-53d00217be48" target="_blank" rel="noopener noreferrer">
+								<Link href="https://buymeacoffee.com/cheapflights/membership" target="_blank" rel="noopener noreferrer">
 									Subscribe Yearly — $50
 								</Link>
-							</Button>
+							</Button> */}
               {/* <Button variant="link" asChild>
                 <Link href="/deals">See live deals</Link>
               </Button> */}
@@ -98,63 +103,73 @@ export default function Page() {
       {/* Pricing */}
       <section id="pricing" className="py-12 bg-gray-50">
         <div className="container">
-        <div className="mx-auto max-w-5xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Simple pricing</h2>
-          <p className="mt-2 text-muted-foreground">Cancel anytime. No hidden fees.</p>
-        </div>
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <Card>
-            <CardHeader>
-              <CardTitle>Monthly</CardTitle>
-              <CardDescription>Best for trying it out</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-4xl font-bold">$5</p>
-              <p className="text-sm text-muted-foreground">per month</p>
-								<Button className="mt-6 w-full justify-stretch">
-									<Link href="https://cheapflights.lemonsqueezy.com/buy/5eeba522-441d-43b5-b6aa-53d00217be48" target="_blank" rel="noopener noreferrer" className="w-full">
+					<div className="mx-auto max-w-5xl text-center">
+						<h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Simple pricing</h2>
+						<p className="mt-2 text-muted-foreground">Cancel anytime. No hidden fees.</p>
+					</div>
+					<div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+						<Card>
+							<CardHeader>
+								<CardTitle>Monthly</CardTitle>
+								<CardDescription>Best for trying it out</CardDescription>
+							</CardHeader>
+							<CardContent>
+								<p className="text-4xl font-bold">$5</p>
+								<p className="text-sm text-muted-foreground">per month</p>
+									{/* <Button className="mt-6 w-full justify-stretch">
+										<Link href="https://buymeacoffee.com/cheapflights/membership" target="_blank" rel="noopener noreferrer" className="w-full">
+											Subscribe
+										</Link>
+									</Button> */}
+							</CardContent>
+						</Card>
+						<Card className="relative border-blue-200">
+							<div className="absolute right-4 top-4">
+								<Badge variant="success">Best value</Badge>
+							</div>
+							<CardHeader>
+								<CardTitle>Yearly</CardTitle>
+								<CardDescription>Save more with annual billing</CardDescription>
+							</CardHeader>
+							<CardContent>
+								<p className="text-4xl font-bold">$50</p>
+								<p className="text-sm text-muted-foreground">per year</p>
+								{/* <Button className="mt-6 w-full justify-stretch">
+									<Link href="https://buymeacoffee.com/cheapflights/membership" target="_blank" rel="noopener noreferrer" className="w-full">
 										Subscribe
 									</Link>
-								</Button>
-            </CardContent>
-          </Card>
-          <Card className="relative border-blue-200">
-            <div className="absolute right-4 top-4">
-              <Badge variant="success">Best value</Badge>
-            </div>
-            <CardHeader>
-              <CardTitle>Yearly</CardTitle>
-              <CardDescription>Save more with annual billing</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-4xl font-bold">$50</p>
-              <p className="text-sm text-muted-foreground">per year</p>
-							<Button className="mt-6 w-full justify-stretch">
-								<Link href="https://cheapflights.lemonsqueezy.com/buy/5eeba522-441d-43b5-b6aa-53d00217be48" target="_blank" rel="noopener noreferrer" className="w-full">
-									Subscribe
-								</Link>
-							</Button>
-            </CardContent>
-          </Card>
-          <Card className="relative border-yellow-500/40 bg-yellow-400/10">
-            <div className="absolute right-4 top-4">
-              <Badge className="bg-yellow-400 text-yellow-900">First 100 only</Badge>
-            </div>
-            <CardHeader>
-              <CardTitle>Yearly — Limited</CardTitle>
-              <CardDescription>Special launch price for early supporters</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-4xl font-bold">$40</p>
-              <p className="text-sm text-muted-foreground">per year</p>
-								<Button className="mt-6 w-full justify-stretch">
-									<Link href="https://cheapflights.lemonsqueezy.com/buy/3d4c4473-17f1-47e2-a9e0-c45b275f5803" target="_blank" rel="noopener noreferrer" className="w-full">
-										Subscribe
-									</Link>
-								</Button>
-            </CardContent>
-          </Card>
-        </div>
+								</Button> */}
+							</CardContent>
+						</Card>
+						<Card className="relative border-yellow-500/40 bg-yellow-400/10">
+							<div className="absolute right-4 top-4">
+								<Badge className="bg-yellow-400 text-yellow-900">First 100 only</Badge>
+							</div>
+							<CardHeader>
+								<CardTitle>Yearly — Limited</CardTitle>
+								<CardDescription>Special launch price for early supporters</CardDescription>
+							</CardHeader>
+							<CardContent>
+								<p className="text-4xl font-bold">$40</p>
+								<p className="text-sm text-muted-foreground">per year</p>
+									{/* <Button className="mt-6 w-full justify-stretch">
+										<Link href="https://buymeacoffee.com/cheapflights/membership" target="_blank" rel="noopener noreferrer" className="w-full">
+											Subscribe
+										</Link>
+									</Button> */}
+							</CardContent>
+						</Card>
+					</div>
+					<div className="mt-8 flex-col text-center gap-3">
+						<Button className="mt-6 p-0">
+							<Link href="https://buymeacoffee.com/cheapflights/membership" target="_blank" rel="noopener noreferrer" className="w-full px-6 py-2">
+								Subscribe
+							</Link>
+						</Button>
+						<p className="text-xs text-muted-foreground mt-3">
+							<i>Payments are powered by <b>Buy Me a Coffee</b>, a safe and reliable platform used by thousands of creators globally. <br/>We’re in the process of expanding our payment methods to include PayPal, credit cards, and local options to better serve our subscribers.</i>
+						</p>
+					</div>
         </div>
       </section>
 
@@ -179,6 +194,23 @@ export default function Page() {
               <p className="font-medium">Do deals sell out fast?</p>
               <p className="text-sm text-muted-foreground mt-1">
                 Great fares can disappear quickly. That’s why we send instant alerts so you can book while prices last.
+              </p>
+            </div>
+						<div>
+              <p className="font-medium">Why do you use Buy Me a Coffee for payments?</p>
+              <p className="text-sm text-muted-foreground mt-1">
+								At the moment, we use Buy Me a Coffee as our secure payment processor. It’s a trusted platform used by thousands of creators and startups around the world.
+              </p>
+							<ul className="mb-3 mt-3 px-2.5 px-4 text-muted-foreground text-sm">
+								<li>Secure & reliable — all transactions are handled safely by Buy Me a Coffee.</li>
+								<li>Global support — lets us accept payments from Canada and other countries quickly.</li>
+								<li>Helps us move fast — using BMC allows us to focus on delivering flight deals to you without delays.</li>
+							</ul>
+							<p className="text-sm text-muted-foreground mt-1">
+								We understand some people may not be familiar with this service. That’s why we’re actively working on adding PayPal, credit cards, and additional payment options to make subscribing even easier in the near future.
+              </p>
+							<p className="text-sm text-muted-foreground mt-1">
+								Your support helps us grow — and every subscription goes straight into building more features and expanding the service.
               </p>
             </div>
           </div>
