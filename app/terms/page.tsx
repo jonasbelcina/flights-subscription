@@ -5,11 +5,11 @@ export default function TermsPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <section className="container py-12 max-w-3xl">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">✈️ Cheap Flights Subscription — Terms of Service</h1>
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">✈️ Cheap Flights Services — Terms of Service</h1>
         <p className="mt-2 text-sm text-muted-foreground">Last updated: September 2025</p>
 
         <p className="mt-6 text-muted-foreground">
-          Welcome to Cheap Flights Subscription (“we,” “our,” or “us”). These Terms of Service (“Terms”) govern your use of our
+          Welcome to Cheap Flights Services (“we,” “our,” or “us”). These Terms of Service (“Terms”) govern your use of our
           website, email alerts, and related services (collectively, the “Service”). By subscribing or using our Service, you
           agree to these Terms. Please read them carefully.
         </p>
@@ -18,7 +18,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-xl font-semibold">1. Service Overview</h2>
             <p className="mt-2 text-muted-foreground">
-              Cheap Flights Subscription is an email notification service that alerts subscribers to discounted flight deals from
+              Cheap Flights Services is an email notification service that alerts subscribers to discounted flight deals from
               their selected departure city. We do not sell flights directly; all bookings are completed through third-party
               providers (e.g., airlines, Google Flights, or travel agencies).
             </p>
