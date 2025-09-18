@@ -7,9 +7,8 @@ import { Badge } from "@/components/ui/badge";
 export const dynamic = "force-dynamic";
 
 type DealSummary = Deal & {
-  maxDiscount?: number;
+  maxDiscount?: number; // percent
   minPrice?: number;
-  minDiscountedPrice?: number;
 };
 
 async function getDeals(): Promise<DealSummary[]> {
@@ -34,22 +33,19 @@ async function getDeals(): Promise<DealSummary[]> {
     console.error(flightsRes.error);
     return deals;
   }
-  const byDeal: Record<string, { maxDiscount: number; minPrice: number; minDiscounted: number }> = {};
+  const byDeal: Record<string, { maxDiscount: number; minPrice: number }> = {};
   for (const f of flightsRes.data as any[]) {
     const price = Number(f.price || 0);
     const discount = Number(f.discount || 0);
-    const discounted = Math.max(0, price - discount);
-    const agg = byDeal[f.deal_id] || { maxDiscount: 0, minPrice: Number.POSITIVE_INFINITY, minDiscounted: Number.POSITIVE_INFINITY };
+    const agg = byDeal[f.deal_id] || { maxDiscount: 0, minPrice: Number.POSITIVE_INFINITY };
     agg.maxDiscount = Math.max(agg.maxDiscount, discount);
     agg.minPrice = Math.min(agg.minPrice, price);
-    agg.minDiscounted = Math.min(agg.minDiscounted, discounted);
     byDeal[f.deal_id] = agg;
   }
   return deals.map((d) => ({
     ...d,
     maxDiscount: byDeal[d.id]?.maxDiscount || 0,
     minPrice: Number.isFinite(byDeal[d.id]?.minPrice) ? byDeal[d.id]?.minPrice : undefined,
-    minDiscountedPrice: Number.isFinite(byDeal[d.id]?.minDiscounted) ? byDeal[d.id]?.minDiscounted : undefined,
   }));
 }
 
@@ -90,16 +86,12 @@ export default async function DealsPage() {
                       <Badge variant="success">Save ${deal.maxDiscount.toFixed(0)}</Badge>
                     ) : null}
                   </div>
-                  {deal.minDiscountedPrice ? (
-                    <CardDescription>
-                      From ${deal.minDiscountedPrice.toFixed(0)}
-                      {deal.minPrice && deal.minPrice > deal.minDiscountedPrice ? (
-                        <span className="ml-2 text-muted-foreground line-through">${deal.minPrice.toFixed(0)}</span>
-                      ) : null}
-                    </CardDescription>
-                  ) : (
-                    <CardDescription>Open to view available flights</CardDescription>
-                  )}
+                  <CardDescription>
+                    {typeof deal.minPrice === "number" ? `From $${deal.minPrice.toFixed(0)}` : "Open to view available flights"}
+                    {deal.maxDiscount && deal.maxDiscount > 0 ? (
+                      <span className="ml-2 text-green-700">Save {deal.maxDiscount.toFixed(0)}%</span>
+                    ) : null}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="mt-auto">
                   <Button asChild>

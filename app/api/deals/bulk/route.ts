@@ -14,25 +14,13 @@ function extractDestination(subject: string): string {
   return match?.[1]?.trim() || subject?.trim() || "Unknown destination";
 }
 
-function parseDiscountToAmount(input: unknown, price: number): number {
+function parseDiscountPercent(input: unknown): number {
   if (input == null) return 0;
-  // If it's already a finite number, treat as absolute dollars off
-  const n = Number(input);
-  if (Number.isFinite(n) && String(input).trim() !== "") {
-    return Math.max(0, n);
-  }
   const s = String(input).trim();
-  // Percentage like "22%"
   const pct = s.match(/^(\d+(?:\.\d+)?)%$/);
-  if (pct) {
-    const p = Number(pct[1]) / 100;
-    return Math.max(0, Math.round(price * p));
-  }
-  // Currency like "$50" or "CA$50"
-  const cur = s.match(/^([A-Za-z$]*)(\d+(?:\.\d+)?)$/);
-  if (cur) {
-    return Math.max(0, Number(cur[2]));
-  }
+  if (pct) return Math.max(0, Number(pct[1]));
+  const n = Number(s);
+  if (Number.isFinite(n)) return Math.max(0, n);
   return 0;
 }
 
@@ -104,7 +92,7 @@ export async function POST(request: Request) {
     const rows = deals.map((d: any) => {
       const price = Number(d.price || 0);
       const rawDiscount = d.discount ?? group?.discount ?? 0;
-      const discount = parseDiscountToAmount(rawDiscount, price);
+      const discount = parseDiscountPercent(rawDiscount);
       return {
         deal_id: dealRow.id,
         dateRange: String(d.dateRange || ""),

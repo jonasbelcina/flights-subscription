@@ -9,22 +9,13 @@ function isAuthorized(request: Request): boolean {
   return Boolean(expected && token && token === expected);
 }
 
-function parseDiscountToAmount(input: unknown, price: number): number {
+function parseDiscountPercent(input: unknown): number {
   if (input == null) return 0;
-  const n = Number(input);
-  if (Number.isFinite(n) && String(input).trim() !== "") {
-    return Math.max(0, n);
-  }
   const s = String(input).trim();
   const pct = s.match(/^(\d+(?:\.\d+)?)%$/);
-  if (pct) {
-    const p = Number(pct[1]) / 100;
-    return Math.max(0, Math.round(price * p));
-  }
-  const cur = s.match(/^([A-Za-z$]*)(\d+(?:\.\d+)?)$/);
-  if (cur) {
-    return Math.max(0, Number(cur[2]));
-  }
+  if (pct) return Math.max(0, Number(pct[1]));
+  const n = Number(s);
+  if (Number.isFinite(n)) return Math.max(0, n);
   return 0;
 }
 
@@ -64,7 +55,7 @@ export async function POST(request: Request) {
       .map((f: any) => {
         const price = Number(f.price || 0);
         const rawDiscount = f.discount ?? groupDiscount ?? 0;
-        const discount = parseDiscountToAmount(rawDiscount, price);
+        const discount = parseDiscountPercent(rawDiscount);
         return {
           deal_id: data.id,
           dateRange: String(f.dateRange || ""),
