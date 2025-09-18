@@ -14,6 +14,28 @@ function extractDestination(subject: string): string {
   return match?.[1]?.trim() || subject?.trim() || "Unknown destination";
 }
 
+function parseDiscountToAmount(input: unknown, price: number): number {
+  if (input == null) return 0;
+  // If it's already a finite number, treat as absolute dollars off
+  const n = Number(input);
+  if (Number.isFinite(n) && String(input).trim() !== "") {
+    return Math.max(0, n);
+  }
+  const s = String(input).trim();
+  // Percentage like "22%"
+  const pct = s.match(/^(\d+(?:\.\d+)?)%$/);
+  if (pct) {
+    const p = Number(pct[1]) / 100;
+    return Math.max(0, Math.round(price * p));
+  }
+  // Currency like "$50" or "CA$50"
+  const cur = s.match(/^([A-Za-z$]*)(\d+(?:\.\d+)?)$/);
+  if (cur) {
+    return Math.max(0, Number(cur[2]));
+  }
+  return 0;
+}
+
 export async function POST(request: Request) {
   if (!isAuthorized(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -79,16 +101,21 @@ export async function POST(request: Request) {
       continue;
     }
 
-    const rows = deals.map((d: any) => ({
-      deal_id: dealRow.id,
-      dateRange: String(d.dateRange || ""),
-      airline: String((Array.isArray(d.airlines) ? d.airlines[0] : d.airline) || ""),
-      stops: String(d.stops || ""),
-      duration: String(d.duration || ""),
-      price: Number(d.price || 0),
-      discount: Math.max(0, Number(d.discount ?? group?.discount ?? 0) || 0),
-      link: String(d.link || ""),
-    }));
+    const rows = deals.map((d: any) => {
+      const price = Number(d.price || 0);
+      const rawDiscount = d.discount ?? group?.discount ?? 0;
+      const discount = parseDiscountToAmount(rawDiscount, price);
+      return {
+        deal_id: dealRow.id,
+        dateRange: String(d.dateRange || ""),
+        airline: String((Array.isArray(d.airlines) ? d.airlines[0] : d.airline) || ""),
+        stops: String(d.stops || ""),
+        duration: String(d.duration || ""),
+        price,
+        discount,
+        link: String(d.link || ""),
+      };
+    });
 
     // Debug: log what we're inserting for visibility in server logs
     try { console.log("deal_flights rows:", rows); } catch {}

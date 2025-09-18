@@ -9,6 +9,25 @@ function isAuthorized(request: Request): boolean {
   return Boolean(expected && token && token === expected);
 }
 
+function parseDiscountToAmount(input: unknown, price: number): number {
+  if (input == null) return 0;
+  const n = Number(input);
+  if (Number.isFinite(n) && String(input).trim() !== "") {
+    return Math.max(0, n);
+  }
+  const s = String(input).trim();
+  const pct = s.match(/^(\d+(?:\.\d+)?)%$/);
+  if (pct) {
+    const p = Number(pct[1]) / 100;
+    return Math.max(0, Math.round(price * p));
+  }
+  const cur = s.match(/^([A-Za-z$]*)(\d+(?:\.\d+)?)$/);
+  if (cur) {
+    return Math.max(0, Number(cur[2]));
+  }
+  return 0;
+}
+
 export async function POST(request: Request) {
   if (!isAuthorized(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -42,16 +61,21 @@ export async function POST(request: Request) {
   if (Array.isArray(flights) && flights.length && data?.id) {
     const rows = flights
       .filter(Boolean)
-      .map((f: any) => ({
-        deal_id: data.id,
-        dateRange: String(f.dateRange || ""),
-        airline: String((Array.isArray(f.airlines) ? f.airlines[0] : f.airline) || ""),
-        stops: String(f.stops || ""),
-        duration: String(f.duration || ""),
-        price: Number(f.price || 0),
-        discount: Math.max(0, Number(f.discount ?? groupDiscount ?? 0) || 0),
-        link: String(f.link || ""),
-      }));
+      .map((f: any) => {
+        const price = Number(f.price || 0);
+        const rawDiscount = f.discount ?? groupDiscount ?? 0;
+        const discount = parseDiscountToAmount(rawDiscount, price);
+        return {
+          deal_id: data.id,
+          dateRange: String(f.dateRange || ""),
+          airline: String((Array.isArray(f.airlines) ? f.airlines[0] : f.airline) || ""),
+          stops: String(f.stops || ""),
+          duration: String(f.duration || ""),
+          price,
+          discount,
+          link: String(f.link || ""),
+        };
+      });
     if (rows.length) {
       try { console.log("deal_flights rows:", rows); } catch {}
       const { data: inserted, error: childErr } = await admin.from("deal_flights").insert(rows).select("id, discount");
