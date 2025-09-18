@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 async function getDealAndFlights(id: string): Promise<{ deal: Deal | null; flights: DealFlight[] }> {
   const [dealRes, flightsRes] = await Promise.all([
     supabase.from("deals").select("id, subject").eq("id", id).single(),
-    supabase.from("deal_flights").select("id, deal_id, dateRange, airline, stops, duration, price, link").eq("deal_id", id).order("price", { ascending: true }).order("id", { ascending: true })
+    supabase.from("deal_flights").select("id, deal_id, dateRange, airline, stops, duration, price, discount, link").eq("deal_id", id).order("price", { ascending: true }).order("id", { ascending: true })
   ]);
 
   // Add error handling for debugging
@@ -69,8 +69,20 @@ export default async function DealPage({ params }: { params: { id: string } }) {
                 <CardContent className="pt-0">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-2xl font-bold">${""}{f.price.toFixed(0)}</p>
-                      <p className="text-xs text-muted-foreground">CAD</p>
+                      {Number(f.discount ?? 0) > 0 ? (
+                        <div>
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-2xl font-bold">${""}{(f.price - (f.discount ?? 0)).toFixed(0)}</span>
+                            <span className="text-sm line-through text-muted-foreground">${""}{f.price.toFixed(0)}</span>
+                          </div>
+                          <p className="text-xs text-green-700">Save ${""}{(f.discount ?? 0).toFixed(0)}</p>
+                        </div>
+                      ) : (
+                        <>
+                          <p className="text-2xl font-bold">${""}{f.price.toFixed(0)}</p>
+                          <p className="text-xs text-muted-foreground">CAD</p>
+                        </>
+                      )}
                     </div>
                     <Button asChild>
                       <Link href={f.link} target="_blank" rel="noopener noreferrer">View</Link>

@@ -86,6 +86,7 @@ export async function POST(request: Request) {
       stops: String(d.stops || ""),
       duration: String(d.duration || ""),
       price: Number(d.price || 0),
+      discount: Number(d.discount || 0),
       link: String(d.link || ""),
     }));
 

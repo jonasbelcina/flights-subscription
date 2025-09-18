@@ -25,6 +25,7 @@ export type DealFlight = {
   stops: string;
   duration: string; // "YWG–PUJ · 9 hrs"
   price: number; // CAD
+  discount?: number; // Optional amount to subtract from price
   link: string; // booking URL
 };
 

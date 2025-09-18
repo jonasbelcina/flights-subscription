@@ -49,6 +49,7 @@ export async function POST(request: Request) {
         stops: String(f.stops || ""),
         duration: String(f.duration || ""),
         price: Number(f.price || 0),
+        discount: Number(f.discount || 0),
         link: String(f.link || ""),
       }));
     if (rows.length) {
