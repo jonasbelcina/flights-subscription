@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const { subject, flights } = payload ?? {};
+  const { subject, flights, discount: groupDiscount } = payload ?? {};
   if (!subject || typeof subject !== "string") {
     return NextResponse.json({ error: "Missing/invalid field: subject (string)" }, { status: 422 });
   }
@@ -49,11 +49,13 @@ export async function POST(request: Request) {
         stops: String(f.stops || ""),
         duration: String(f.duration || ""),
         price: Number(f.price || 0),
-        discount: Number(f.discount || 0),
+        discount: Math.max(0, Number(f.discount ?? groupDiscount ?? 0) || 0),
         link: String(f.link || ""),
       }));
     if (rows.length) {
-      const { error: childErr } = await admin.from("deal_flights").insert(rows);
+      try { console.log("deal_flights rows:", rows); } catch {}
+      const { data: inserted, error: childErr } = await admin.from("deal_flights").insert(rows).select("id, discount");
+      try { console.log("inserted deal_flights:", inserted); } catch {}
       if (childErr) {
         return NextResponse.json({ ok: true, deal: data, warning: `Inserted deal but failed to add flights: ${childErr.message}` }, { status: 201 });
       }

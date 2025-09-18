@@ -86,11 +86,15 @@ export async function POST(request: Request) {
       stops: String(d.stops || ""),
       duration: String(d.duration || ""),
       price: Number(d.price || 0),
-      discount: Number(d.discount || 0),
+      discount: Math.max(0, Number(d.discount ?? group?.discount ?? 0) || 0),
       link: String(d.link || ""),
     }));
 
-    const { error: flightsErr } = await admin.from("deal_flights").insert(rows);
+    // Debug: log what we're inserting for visibility in server logs
+    try { console.log("deal_flights rows:", rows); } catch {}
+
+    const { data: inserted, error: flightsErr } = await admin.from("deal_flights").insert(rows).select("id, discount");
+    try { console.log("inserted deal_flights:", inserted); } catch {}
     if (flightsErr) {
       warnings.push(`Created deal ${dealRow.id} but failed to add flights: ${flightsErr.message}`);
     } else {
