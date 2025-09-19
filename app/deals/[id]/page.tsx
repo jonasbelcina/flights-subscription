@@ -2,6 +2,7 @@ import Link from "next/link";
 import { supabase, type Deal, type DealFlight } from "@/lib/supabase";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 async function getDealAndFlights(id: string): Promise<{ deal: Deal | null; flights: DealFlight[] }> {
   const [dealRes, flightsRes] = await Promise.all([
@@ -69,8 +70,13 @@ export default async function DealPage({ params }: { params: { id: string } }) {
                 <CardContent className="pt-0">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-2xl font-bold">${""}{f.price.toFixed(0)}</p>
-                      <p className="text-xs text-muted-foreground">CAD{Number(f.discount ?? 0) > 0 ? ` • Save ${Number(f.discount).toFixed(0)}%` : ""}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="text-2xl font-bold">${""}{f.price.toFixed(0)}</p>
+                        {Number(f.discount ?? 0) > 0 ? (
+                          <Badge variant="successSoft" className="uppercase tracking-wide">Save {Number(f.discount).toFixed(0)}%</Badge>
+                        ) : null}
+                      </div>
+                      <p className="text-xs text-muted-foreground">CAD</p>
                     </div>
                     <Button asChild>
                       <Link href={f.link} target="_blank" rel="noopener noreferrer">View</Link>

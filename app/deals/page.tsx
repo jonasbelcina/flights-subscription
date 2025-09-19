@@ -83,14 +83,11 @@ export default async function DealsPage() {
                       </Link>
                     </CardTitle>
                     {deal.maxDiscount && deal.maxDiscount > 0 ? (
-                      <Badge variant="success">Save ${deal.maxDiscount.toFixed(0)}</Badge>
+                      <Badge variant="successSoft" className="uppercase tracking-wide">Save {deal.maxDiscount.toFixed(0)}%</Badge>
                     ) : null}
                   </div>
                   <CardDescription>
                     {typeof deal.minPrice === "number" ? `From $${deal.minPrice.toFixed(0)}` : "Open to view available flights"}
-                    {deal.maxDiscount && deal.maxDiscount > 0 ? (
-                      <span className="ml-2 text-green-700">Save {deal.maxDiscount.toFixed(0)}%</span>
-                    ) : null}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="mt-auto">
